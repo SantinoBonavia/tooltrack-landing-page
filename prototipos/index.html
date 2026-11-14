@@ -1,0 +1,51 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prototipos TOOLTRACK</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Índice de los cuatro prototipos: una lista grande, una fila por dirección */
+:root{
+  --bg:#0D1B2A; --row:#13233A; --ink:#F1F5F9; --mute:#A3B3C9; --accent:#FF7A00; --line:rgba(241,245,249,.12);
+  --display:'Poppins',Arial,sans-serif; --body:'Inter',Arial,sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:clamp(40px,7vw,90px)}
+.wrap{max-width:1100px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;letter-spacing:.06em;font-size:15px}
+.brand i{width:14px;height:14px;background:var(--accent);border-radius:3px;display:block}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,6vw,76px);line-height:1;letter-spacing:-.02em;margin:28px 0 16px;text-wrap:balance}
+.lead{color:var(--mute);max-width:58ch;margin:0 0 44px}
+ol{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}
+li a{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:20px;align-items:center;padding:26px 8px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;transition:background .25s,padding .25s}
+li a:hover,li a:focus-visible{background:var(--row);padding-left:18px;outline:none}
+li a:focus-visible{box-shadow:inset 3px 0 0 var(--accent)}
+.n{font-family:var(--display);font-weight:800;font-size:44px;color:var(--accent);line-height:1}
+.t{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,32px);line-height:1.15}
+.d{color:var(--mute);font-size:15px;margin-top:4px}
+.ref{font-size:13px;color:var(--mute);white-space:nowrap}
+.go{font-weight:600;color:var(--accent);white-space:nowrap}
+.meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+@media (max-width:640px){li a{grid-template-columns:48px minmax(0,1fr)}.n{font-size:32px}.meta{grid-column:2;align-items:flex-start}}
+.foot{margin-top:40px;font-size:14px;color:var(--mute)}
+</style>
+<div class="wrap">
+  <div class="brand"><i></i>TOOLTRACK</div>
+  <h1>Cuatro formas de contar TOOLTRACK</h1>
+  <p class="lead">Prototipos navegables de la landing. Entrá a cada uno y bajá despacio: todo se mueve con el scroll. Se ven mejor en una pantalla grande.</p>
+  <ol>
+    <li><a href="op1.html"><span class="n">1</span><div><div class="t">Vuelo 3D</div><div class="d">Una escena 3D: la cámara recorre el depósito, la obra y la herramienta.</div></div><div class="meta"><span class="ref">Ref. konkelectrical.com</span><span class="go">Abrir →</span></div></a></li>
+    <li><a href="op2.html"><span class="n">2</span><div><div class="t">Del caos al orden</div><div class="d">Herramientas tiradas que vuelan y se acomodan en el panel.</div></div><div class="meta"><span class="ref">Ref. wiro.ae</span><span class="go">Abrir →</span></div></a></li>
+    <li><a href="op3.html"><span class="n">3</span><div><div class="t">La interfaz se arma</div><div class="d">Las piezas del panel y del celular entran y encajan en su lugar.</div></div><div class="meta"><span class="ref">Ref. legacybridge.software</span><span class="go">Abrir →</span></div></a></li>
+    <li><a href="op4.html"><span class="n">4</span><div><div class="t">Cinemático</div><div class="d">Cuatro escenas de película que avanzan con el scroll.</div></div><div class="meta"><span class="ref">Ref. arsenals.com</span><span class="go">Abrir →</span></div></a></li>
+  </ol>
+  <p class="foot">Hecho con GSAP, ScrollTrigger, Lenis y Three.js. Los datos son de ejemplo.</p>
+</div>
+<script>
+// Un link con #op1 … #op4 abre ese prototipo directo
+(function(){
+  const m = location.hash.match(/^#op([1-4])$/);
+  if (m) { try { history.replaceState(null, '', location.pathname); } catch (e) {} location.href = 'op' + m[1] + '.html'; }
+})();
+</script>
+</html>

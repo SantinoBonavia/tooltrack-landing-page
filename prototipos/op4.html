@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TOOLTRACK · Cinemático</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+/* Pantalla de cine: franjas negras, código de tiempo y cuatro escenas que avanzan con el scroll */
+:root{
+  --bg:#05090F; --ink:#F3EEE6; --mute:#9AA6B8; --accent:#FF7A00; --navy:#0D1B2A; --band:#000;
+  --display:'Poppins',Arial,sans-serif; --body:'Inter',Arial,sans-serif; --mono:'JetBrains Mono','Courier New',monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+.band{position:fixed;left:0;right:0;height:calc(44px + 3vh);background:var(--band);z-index:15;pointer-events:none}
+.band.t{top:0;height:calc(44px + 3vh + env(safe-area-inset-top,0px))}.band.b{bottom:0;height:calc(44px + 3vh + env(safe-area-inset-bottom,0px))}
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:calc(14px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) 14px max(20px,env(safe-area-inset-left,0px));font-size:14px;color:var(--mute)}
+.bar a{text-decoration:none;font-weight:600}
+.bar a:hover,.bar a:focus-visible{color:var(--accent)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;color:var(--ink);letter-spacing:.06em}
+.brand i{width:14px;height:14px;background:var(--accent);border-radius:3px;display:block}
+.bar .tag{display:none}
+@media (min-width:760px){.bar .tag{display:block}}
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--mute);
+  padding:14px max(20px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.hud b{color:var(--accent);font-weight:500}
+.grain{position:fixed;inset:-50%;z-index:14;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-3%,2%)}66%{transform:translate(2%,-3%)}100%{transform:translate(0,0)}}
+.pad{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-block:110px;
+  background:radial-gradient(60% 50% at 70% 60%,rgba(255,122,0,.16),transparent 70%),var(--bg)}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(52px,12.5vw,210px);line-height:.86;letter-spacing:-.04em;margin:0}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .ln span{display:block}
+.hero h1 .out{color:transparent;-webkit-text-stroke:2px var(--accent)}
+@supports not (-webkit-text-stroke:2px red){.hero h1 .out{color:var(--accent)}}
+.hero p{max-width:40ch;color:var(--mute);margin:28px 0 0}
+.film{position:relative;height:100vh;overflow:hidden;background:#000}
+.scene{position:absolute;inset:0}
+.scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cap{position:absolute;left:max(24px,6vw);right:24px;bottom:calc(70px + 9vh)}
+.cap .n{font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--accent)}
+.cap h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,10vw,170px);line-height:.86;letter-spacing:-.04em;margin:8px 0 12px;text-shadow:0 10px 50px rgba(0,0,0,.4)}
+.cap p{margin:0;max-width:36ch;font-size:clamp(16px,1.5vw,20px);color:#E3DCD0}
+.words{min-height:100vh;display:flex;align-items:center;padding-block:120px}
+.words p{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,68px);line-height:1.1;letter-spacing:-.02em;max-width:22ch;margin:0 auto}
+.words .w{opacity:.14}
+.final{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding-block:110px;gap:28px}
+.final h2{font-family:var(--display);font-weight:900;font-size:clamp(60px,15vw,250px);line-height:.85;letter-spacing:-.05em;margin:0}
+.final h2 span{color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:#0D1B2A;font-weight:700;text-decoration:none;padding:16px 28px;border-radius:999px}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.grain{animation:none}.words .w{opacity:1}}
+</style>
+</head>
+<body>
+<div class="band t"></div><div class="band b"></div><div class="grain" aria-hidden="true"></div>
+<header class="bar">
+  <a href="op3.html">← Anterior</a>
+  <div class="brand"><i></i>TOOLTRACK</div>
+  <span class="tag">Prototipo · Opción 4 · Cinemático</span>
+  <a href="index.html">Las 4 opciones →</a>
+</header>
+<div class="hud" aria-hidden="true"><span>TC <b id="tc">00:00:00:00</b></span><span id="sc">ESC 00 / 04 · INTRO</span></div>
+<main>
+  <section class="hero pad">
+    <div class="kicker">TOOLTRACK presenta · Una historia en cuatro escenas</div>
+    <h1><span class="ln"><span>Cada</span></span><span class="ln"><span class="out">herramienta,</span></span><span class="ln"><span>en su lugar.</span></span></h1>
+    <p>Del depósito a la obra, y de vuelta. Bajá para ver la película.</p>
+  </section>
+
+  <section class="film" aria-label="Cuatro escenas">
+    <div class="scene" data-name="DEPÓSITO">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A1422"/><stop offset="1" stop-color="#1B263B"/></linearGradient>
+          <linearGradient id="cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB066" stop-opacity=".55"/><stop offset="1" stop-color="#FFB066" stop-opacity="0"/></linearGradient>
+          <filter id="gl"><feGaussianBlur stdDeviation="6"/></filter>
+        </defs>
+        <rect width="1600" height="900" fill="url(#d1)"/>
+        <polygon points="760,0 840,0 1180,900 420,900" fill="url(#cone)"/>
+        <g fill="#060C15">
+          <rect x="80" y="180" width="380" height="640"/><rect x="1140" y="180" width="380" height="640"/>
+          <rect x="520" y="300" width="200" height="520"/><rect x="880" y="300" width="200" height="520"/>
+        </g>
+        <g fill="#1F3150"><rect x="80" y="330" width="380" height="10"/><rect x="80" y="490" width="380" height="10"/><rect x="80" y="650" width="380" height="10"/>
+          <rect x="1140" y="330" width="380" height="10"/><rect x="1140" y="490" width="380" height="10"/><rect x="1140" y="650" width="380" height="10"/></g>
+        <g fill="#FF7A00" filter="url(#gl)" opacity=".85"><rect x="120" y="280" width="90" height="50"/><rect x="300" y="440" width="120" height="50"/><rect x="1200" y="280" width="70" height="50"/><rect x="1330" y="600" width="140" height="50"/><rect x="560" y="460" width="80" height="40"/><rect x="930" y="560" width="110" height="40"/></g>
+        <g fill="#FF7A00"><rect x="120" y="280" width="90" height="50"/><rect x="300" y="440" width="120" height="50"/><rect x="1200" y="280" width="70" height="50"/><rect x="1330" y="600" width="140" height="50"/><rect x="560" y="460" width="80" height="40"/><rect x="930" y="560" width="110" height="40"/></g>
+        <rect y="820" width="1600" height="80" fill="#04080E"/>
+      </svg>
+      <div class="cap pad"><div class="n">ESC 01</div><h2>Depósito</h2><p>Ciento veintiocho herramientas. Cada una con su código y su estado.</p></div>
+    </div>
+    <div class="scene" data-name="OPERARIO">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="d2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0D1B2A"/><stop offset=".6" stop-color="#3B2B48"/><stop offset="1" stop-color="#C2562A"/></linearGradient>
+          <radialGradient id="ph"><stop offset="0" stop-color="#FFB066" stop-opacity=".9"/><stop offset="1" stop-color="#FF7A00" stop-opacity="0"/></radialGradient></defs>
+        <rect width="1600" height="900" fill="url(#d2)"/>
+        <g stroke="#1A1420" stroke-width="10" opacity=".8"><path d="M100 900V260M300 900V260M500 900V260M100 260H500M100 460H500M100 660H500M100 260L300 460M300 460L500 260"/></g>
+        <rect y="760" width="1600" height="140" fill="#0B0910"/>
+        <circle cx="1035" cy="470" r="150" fill="url(#ph)"/>
+        <g fill="#0B0910"><circle cx="1000" cy="330" r="46"/><path d="M930 400h140l30 230-40 10-15 140h-40l-5-120h-10l-5 120h-40l-15-140-40-10z"/><path d="M1060 420l40 50-20 20-50-40z"/></g>
+        <rect x="1022" y="452" width="26" height="42" rx="5" fill="#FF7A00"/>
+      </svg>
+      <div class="cap pad"><div class="n">ESC 02</div><h2>Operario</h2><p>Juan pide la amoladora desde el celular. El responsable aprueba.</p></div>
+    </div>
+    <div class="scene" data-name="OBRA">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="d3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B263B"/><stop offset=".55" stop-color="#B8452A"/><stop offset="1" stop-color="#FF9A3D"/></linearGradient></defs>
+        <rect width="1600" height="900" fill="url(#d3)"/>
+        <circle cx="1120" cy="640" r="140" fill="#FFD29A" opacity=".9"/>
+        <g fill="#140C10">
+          <rect x="300" y="300" width="24" height="560"/><rect x="470" y="300" width="24" height="560"/><rect x="640" y="300" width="24" height="560"/><rect x="810" y="300" width="24" height="560"/>
+          <rect x="280" y="300" width="580" height="22"/><rect x="280" y="440" width="580" height="22"/><rect x="280" y="580" width="580" height="22"/><rect x="280" y="720" width="580" height="22"/>
+          <rect x="1300" y="110" width="30" height="760"/><rect x="900" y="110" width="620" height="26"/><rect x="1500" y="136" width="60" height="50"/>
+          <rect x="1040" y="136" width="4" height="260"/><rect x="1010" y="396" width="64" height="30"/>
+        </g>
+        <rect y="840" width="1600" height="60" fill="#140C10"/>
+      </svg>
+      <div class="cap pad"><div class="n">ESC 03</div><h2>Obra</h2><p>Veintitrés herramientas asignadas. Sabés quién tiene cada una.</p></div>
+    </div>
+    <div class="scene" data-name="CIERRE">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="1600" height="900" fill="#0A1422"/>
+        <circle cx="1100" cy="420" r="230" fill="none" stroke="#1F3150" stroke-width="14"/>
+        <circle class="ring" cx="1100" cy="420" r="230" fill="none" stroke="#FF7A00" stroke-width="14" stroke-linecap="round" stroke-dasharray="1446" stroke-dashoffset="0" transform="rotate(-90 1100 420)"/>
+        <path class="tick" d="M1000 432l52 58 128-160" fill="none" stroke="#FF7A00" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="300" stroke-dashoffset="0"/>
+      </svg>
+      <div class="cap pad"><div class="n">ESC 04</div><h2>Cierre</h2><p>Obra cerrada. Cero faltantes, todo registrado.</p></div>
+    </div>
+  </section>
+
+  <section class="words pad"><p id="words">Antes, una herramienta perdida era plata perdida. Ahora cada movimiento queda registrado: quién la pidió, quién la aprobó y dónde está hoy.</p></section>
+
+  <section class="final pad">
+    <div class="kicker">Fin</div>
+    <h2>TOOLTRACK<span>.</span></h2>
+    <a class="btn" href="index.html">Ver las otras opciones</a>
+  </section>
+</main>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  gsap.registerPlugin(ScrollTrigger);
+  let lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.08 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  window.__shot = y => { lenis ? lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y); ScrollTrigger.update(); };
+
+  // Palabras sueltas para el revelado
+  const wp = document.getElementById('words');
+  wp.innerHTML = wp.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+
+  // Código de tiempo según el scroll (24 cuadros por segundo)
+  const tc = document.getElementById('tc'), sc = document.getElementById('sc');
+  const pad = n => String(n).padStart(2, '0');
+  const tick = () => { const f = Math.round(scrollY / 6), s = Math.floor(f / 24); tc.textContent = `00:${pad(Math.floor(s / 60))}:${pad(s % 60)}:${pad(f % 24)}`; };
+  addEventListener('scroll', tick, { passive: true }); tick();
+
+  const scenes = gsap.utils.toArray('.scene');
+  if (reduce) { gsap.set(scenes.slice(1), { autoAlpha: 0 }); gsap.set('.w', { opacity: 1 }); return; }
+
+  gsap.from('.hero h1 .ln span', { yPercent: 110, duration: 1.1, ease: 'power4.out', stagger: .12, delay: .15 });
+  gsap.from('.hero p, .kicker', { opacity: 0, y: 20, duration: .9, delay: .6 });
+
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '.film', start: 'top top', end: '+=420%', pin: true, scrub: true,
+    onUpdate: s => { const i = Math.min(3, Math.floor(s.progress * 4)); sc.textContent = `ESC 0${i + 1} / 04 · ${scenes[i].dataset.name}`; },
+    onLeaveBack: () => { sc.textContent = 'ESC 00 / 04 · INTRO'; } } });
+  scenes.forEach((s, i) => {
+    const svg = s.querySelector('svg'), cap = s.querySelectorAll('.cap > *');
+    if (i > 0) tl.fromTo(s, { autoAlpha: 0 }, { autoAlpha: 1, duration: .25, ease: 'none' }, i - .2);
+    tl.fromTo(svg, { scale: 1.16 }, { scale: 1, duration: 1.2, ease: 'none' }, i - .2)
+      .fromTo(cap, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: .3, stagger: .06, ease: 'power3.out' }, i)
+      .to(cap, { autoAlpha: i === 3 ? 1 : 0, yPercent: i === 3 ? 0 : -30, duration: .2 }, i + .72);
+  });
+  tl.fromTo('.ring', { strokeDashoffset: 1446 }, { strokeDashoffset: 0, duration: .55, ease: 'power1.inOut' }, 3)
+    .fromTo('.tick', { strokeDashoffset: 300 }, { strokeDashoffset: 0, duration: .3 }, 3.5);
+
+  gsap.to('.w', { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: '.words', start: 'top 70%', end: 'bottom 70%', scrub: true } });
+})();
+</script>
+</body>
+</html>

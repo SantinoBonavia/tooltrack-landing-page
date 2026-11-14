@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Identidad TOOLTRACK: naranja, azules profundos y Poppins */
+@theme {
+  --color-brand: #ff7a00;
+  --color-navy: #1b263b;
+  --color-ink: #0d1b2a;
+  --color-mist: #f1f5f9;
+  --color-mute: #a3b3c9;
+  --font-display: "Poppins", Arial, sans-serif;
+  --font-sans: "Inter", Arial, sans-serif;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-mist);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}

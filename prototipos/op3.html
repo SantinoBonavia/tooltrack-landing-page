@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TOOLTRACK · La interfaz se arma</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+/* SaaS claro: el panel arranca como un plano punteado y cada pieza entra desde afuera a su lugar */
+:root{
+  --bg:#F1F5F9; --paper:#FBFCFE; --ink:#0D1B2A; --mute:#526077; --accent:#FF7A00; --accent-ink:#A84E00;
+  --app:#0D1B2A; --app2:#16243A; --app3:#1F3150; --appInk:#F1F5F9; --appMute:#A3B3C9; --dash:#C3CEDC; --ok:#2FB487;
+  --display:'Poppins',Arial,sans-serif; --body:'Inter',Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:calc(14px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) 14px max(20px,env(safe-area-inset-left,0px));
+  font-size:14px;color:var(--mute);background:linear-gradient(180deg,rgba(241,245,249,.95),rgba(241,245,249,0))}
+.bar a{text-decoration:none;font-weight:600}
+.bar a:hover,.bar a:focus-visible{color:var(--accent-ink)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;color:var(--ink);letter-spacing:.06em}
+.brand i{width:14px;height:14px;background:var(--accent);border-radius:3px;display:block}
+.bar .tag{display:none}
+@media (min-width:760px){.bar .tag{display:block}}
+.pin{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+  padding-block:90px 40px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.grid2{width:min(1280px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.35fr);gap:clamp(24px,4vw,64px);align-items:center}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-ink)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,4.4vw,64px);line-height:1;letter-spacing:-.025em;margin:14px 0 18px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent-ink)}
+.lead{color:var(--mute);max-width:38ch;margin:0 0 28px}
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.steps li{position:relative;padding:12px 16px 12px 18px;border-radius:12px;color:var(--mute);font-weight:600;transition:background .3s,color .3s}
+.steps li small{display:block;font-weight:400;font-size:14px}
+.steps li::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:2px;background:var(--dash);transition:background .3s}
+.steps li.on{background:var(--paper);color:var(--ink);box-shadow:0 6px 20px rgba(13,27,42,.06)}
+.steps li.on::before{background:var(--accent)}
+/* La app */
+.app{position:relative;display:grid;grid-template-columns:64px 1fr;background:var(--app);border-radius:22px;overflow:hidden;box-shadow:0 40px 90px rgba(13,27,42,.28);min-height:540px}
+.side{background:#0A1522;display:flex;flex-direction:column;align-items:center;gap:16px;padding:18px 0}
+.side i{display:block;width:34px;height:34px;border-radius:10px;background:var(--accent)}
+.side b{display:block;width:26px;height:8px;border-radius:4px;background:var(--app3)}
+.side b.on{background:var(--appMute)}
+.main{padding:16px;display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:auto;align-content:start;min-width:0}
+.top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;color:var(--appInk)}
+.top b{font-family:var(--display);font-size:17px}
+.top span{font-size:12px;color:var(--appMute);background:var(--app2);border-radius:999px;padding:6px 12px}
+.slot{border:1.5px dashed #33496D;border-radius:14px;min-width:0}
+.slot.w2{grid-column:span 2}.slot.w3{grid-column:1/-1}
+.pc{background:var(--app2);border:1px solid #2A3E60;border-radius:14px;padding:14px;color:var(--appInk);height:100%;will-change:transform}
+.pc .k{font-size:12px;color:var(--appMute)}
+.pc .v{font-family:var(--display);font-size:clamp(24px,2.6vw,34px);font-weight:700;line-height:1.1}
+.pc .v.o{color:var(--accent)}
+.pc h3{font-size:13px;font-weight:600;color:var(--appMute);margin:0 0 8px}
+.rows{display:grid;gap:8px}
+.r{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;background:var(--app3);border-radius:10px;padding:9px 11px;font-size:13px}
+.r b{font-weight:600}.r small{display:block;color:var(--appMute);font-size:12px}
+.st{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.st.uso{background:rgba(255,122,0,.18);color:#FFB066}.st.ok{background:rgba(47,180,135,.18);color:#5FD6AC}
+.req{border-color:var(--accent)}
+.req p{margin:6px 0 12px;font-size:13px;color:var(--appMute)}
+.req .btns{display:flex;gap:6px}
+.req .btns span{font-size:12px;font-weight:700;padding:6px 10px;border-radius:8px;background:var(--app3)}
+.req .btns span:first-child{background:var(--accent);color:#0D1B2A}
+.bars{display:flex;align-items:flex-end;gap:8px;height:84px}
+.bars i{flex:1;background:linear-gradient(180deg,#FF9A3D,#FF7A00);border-radius:6px 6px 2px 2px;transform-origin:bottom}
+.bars i:nth-child(odd){background:var(--app3)}
+.toast{position:absolute;right:18px;bottom:18px;background:var(--paper);color:var(--ink);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.3);display:flex;gap:8px;align-items:center}
+.toast::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ok)}
+@media (max-width:560px){.main{grid-template-columns:1fr 1fr}.slot.s3{display:none}.slot.w2{grid-column:1/-1}}
+/* Teléfono */
+.stage3d{perspective:1800px;display:flex;justify-content:center;align-items:center;min-height:640px}
+.phone{position:relative;width:290px;height:600px;transform-style:preserve-3d}
+.ly{position:absolute;inset:0;border-radius:40px;transform-style:preserve-3d}
+.ly.body{background:var(--app);box-shadow:0 30px 60px rgba(13,27,42,.35)}
+.ly.screen{inset:12px;border-radius:30px;background:#F4F7FB}
+.ly .in{position:absolute;left:24px;right:24px}
+.hdr{top:36px;background:var(--app);color:var(--appInk);border-radius:18px;padding:16px}
+.hdr small{color:var(--appMute);font-size:12px}.hdr b{display:block;font-family:var(--display);font-size:20px}
+.big{top:150px;background:var(--accent);color:#0D1B2A;border-radius:18px;padding:16px;font-weight:700}
+.big span{display:block;font-family:var(--display);font-size:34px;line-height:1}
+.lst{top:262px;display:grid;gap:10px}
+.lst div{background:#fff;border:1px solid #DCE3EC;border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between}
+.lst div small{color:var(--mute);font-weight:500}
+.nav{bottom:26px;display:flex;justify-content:space-around;background:#fff;border:1px solid #DCE3EC;border-radius:18px;padding:12px}
+.nav i{width:26px;height:26px;border-radius:8px;background:#DCE3EC;display:block}.nav i:first-child{background:var(--accent)}
+.points{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.points li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.points li span{width:34px;height:34px;border-radius:10px;background:var(--paper);border:1px solid #DCE3EC;display:grid;place-items:center;font-weight:700;color:var(--accent-ink);font-size:14px}
+.points b{display:block}.points small{color:var(--mute);font-size:15px}
+.final{text-align:center;padding-block:clamp(90px,12vw,150px);padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));background:var(--app);color:var(--appInk)}
+.final h2{font-family:var(--display);font-size:clamp(36px,5vw,68px);line-height:1.02;margin:14px auto 28px;max-width:15ch;text-wrap:balance}
+.final .eyebrow{color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:#0D1B2A;font-weight:700;text-decoration:none;padding:16px 28px;border-radius:999px}
+.btn:focus-visible{outline:3px solid var(--appInk);outline-offset:3px}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a href="op2.html">← Anterior</a>
+  <div class="brand"><i></i>TOOLTRACK</div>
+  <span class="tag">Prototipo · Opción 3 · La interfaz se arma</span>
+  <a href="op4.html">Siguiente →</a>
+</header>
+<main>
+  <section class="pin build" aria-label="El panel se arma">
+    <div class="grid2">
+      <div>
+        <div class="eyebrow">Panel del administrador</div>
+        <h1>Tu inventario, armado <em>pieza por pieza.</em></h1>
+        <p class="lead">Bajá y mirá cómo cada parte de TOOLTRACK encaja en su lugar.</p>
+        <ol class="steps">
+          <li data-s="0">Inventario<small>Cuántas hay y en qué estado.</small></li>
+          <li data-s="1">Custodia<small>Quién tiene cada herramienta.</small></li>
+          <li data-s="2">Solicitudes<small>Pedidos que se aprueban en un toque.</small></li>
+        </ol>
+      </div>
+      <div class="app">
+        <div class="side"><i></i><b class="on"></b><b></b><b></b><b></b></div>
+        <div class="main">
+          <div class="top"><b>Inicio</b><span>Buscar herramienta…</span></div>
+          <div class="slot"><div class="pc g0"><div class="k">Herramientas</div><div class="v o">128</div></div></div>
+          <div class="slot"><div class="pc g0"><div class="k">En obra</div><div class="v">71</div></div></div>
+          <div class="slot s3"><div class="pc g0"><div class="k">En reparación</div><div class="v">3</div></div></div>
+          <div class="slot w2"><div class="pc g1"><h3>Custodia actual</h3><div class="rows">
+            <div class="r"><div><b>Amoladora 9”</b><small>Juan Pérez · Obra Norte</small></div><span class="st uso">En uso</span></div>
+            <div class="r"><div><b>Taladro percutor</b><small>Pedro Gómez · Obra Sur</small></div><span class="st uso">En uso</span></div>
+            <div class="r"><div><b>Rotomartillo</b><small>Depósito central</small></div><span class="st ok">Disponible</span></div>
+          </div></div></div>
+          <div class="slot"><div class="pc req g2"><h3>Solicitud pendiente</h3><b>Lucía pide la amoladora</b><p>Responsable: Juan Pérez</p><div class="btns"><span>Aprobar</span><span>Rechazar</span></div></div></div>
+          <div class="slot w3"><div class="pc g0"><h3>Movimientos por semana</h3><div class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:56%"></i><i style="height:92%"></i><i style="height:70%"></i><i style="height:100%"></i></div></div></div>
+        </div>
+        <div class="toast g3">Solicitud aprobada · custodia transferida</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pin phone-sec" aria-label="La app del operario se arma">
+    <div class="grid2">
+      <div>
+        <div class="eyebrow">App del operario</div>
+        <h1>Y en la obra, <em>desde el celular.</em></h1>
+        <ul class="points">
+          <li><span>1</span><div><b>Mis herramientas</b><small>Lo que tiene a su cargo, siempre a mano.</small></div></li>
+          <li><span>2</span><div><b>Pedir una herramienta</b><small>Elige cuál y el sistema avisa al responsable.</small></div></li>
+          <li><span>3</span><div><b>Reportar una rotura</b><small>En dos toques, y queda en el historial.</small></div></li>
+        </ul>
+      </div>
+      <div class="stage3d">
+        <div class="phone">
+          <div class="ly body"></div>
+          <div class="ly screen"></div>
+          <div class="ly"><div class="in hdr"><small>Obra Barrio Norte</small><b>Hola, Juan</b></div></div>
+          <div class="ly"><div class="in big"><span>4</span>herramientas a tu cargo</div></div>
+          <div class="ly"><div class="in lst"><div>Amoladora 9”<small>En uso</small></div><div>Nivel láser<small>En uso</small></div><div>Escalera<small>En uso</small></div></div></div>
+          <div class="ly"><div class="in nav"><i></i><i></i><i></i><i></i></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="eyebrow">TOOLTRACK</div>
+    <h2>Todo encaja cuando sabés dónde está cada cosa.</h2>
+    <a class="btn" href="index.html">Ver las otras opciones</a>
+  </section>
+</main>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  gsap.registerPlugin(ScrollTrigger);
+  let lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.09 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  window.__shot = y => { lenis ? lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y); ScrollTrigger.update(); };
+  const steps = [...document.querySelectorAll('.steps li')];
+  const mark = i => steps.forEach((s, k) => s.classList.toggle('on', k === i));
+  if (reduce) { mark(2); return; }
+  mark(-1);
+
+  // Cada pieza entra desde un lado distinto
+  const dirs = [[-520, -160, -18], [0, -420, 10], [560, -120, 22], [-640, 220, -12], [620, 260, 16], [0, 520, -8]];
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' },
+    scrollTrigger: { trigger: '.build', start: 'top top', end: '+=230%', pin: true, scrub: true,
+      onUpdate: s => mark(s.progress < .08 ? -1 : s.progress < .42 ? 0 : s.progress < .72 ? 1 : 2) } });
+  const group = (sel, at) => gsap.utils.toArray(sel).forEach((el, i) => {
+    const d = dirs[(i + at * 2) % dirs.length];
+    tl.fromTo(el, { x: d[0], y: d[1], rotation: d[2], scale: .85, autoAlpha: 0 }, { x: 0, y: 0, rotation: 0, scale: 1, autoAlpha: 1, duration: .28, immediateRender: true }, .08 + at * .3 + i * .06);
+  });
+  group('.g0', 0); group('.g1', 1); group('.g2', 2);
+  tl.fromTo('.bars i', { scaleY: 0 }, { scaleY: 1, duration: .2, stagger: .02 }, .3)
+    .fromTo('.toast', { y: 60, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .12 }, .95);
+
+  // Teléfono: capas separadas en el espacio que se juntan
+  const layers = gsap.utils.toArray('.phone .ly');
+  const pt = gsap.timeline({ scrollTrigger: { trigger: '.phone-sec', start: 'top top', end: '+=160%', pin: true, scrub: true } });
+  pt.fromTo('.phone', { rotationX: 52, rotationZ: -32, y: 80 }, { rotationX: 0, rotationZ: 0, y: 0, ease: 'power2.inOut', duration: 1 }, 0);
+  layers.forEach((l, i) => pt.fromTo(l, { z: i * 120 }, { z: 0, ease: 'power2.inOut', duration: .9 }, .05));
+  gsap.utils.toArray('.points li').forEach((li, i) => pt.fromTo(li, { autoAlpha: .25, x: -20 }, { autoAlpha: 1, x: 0, duration: .2 }, .2 + i * .22));
+})();
+</script>
+</body>
+</html>
