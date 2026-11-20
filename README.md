@@ -49,7 +49,7 @@ En `prototipos/` están las cuatro direcciones visuales que evaluamos. Se abren 
 3. **La interfaz se arma**: las piezas del panel y del celular encajan en su lugar.
 4. **Cinemático**: cuatro escenas de película que avanzan con el scroll.
 
-La dirección final todavía no está elegida.
+La dirección elegida es la **opción 5** (clásica con movimiento). El plan de armado está en [`docs/PLAN.md`](docs/PLAN.md).
 
 ## Identidad
 

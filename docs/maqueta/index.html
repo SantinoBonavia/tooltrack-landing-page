@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TOOLTRACK · Landing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Hero claro y cálido con la app real cruzando hacia una banda oscura; luego bento de funciones, pasos y llamado a la acción */
+:root{
+  --acero:#0D1B2A; --profundo:#1B263B; --naranja:#FF7A00; --gris:#F1F5F9; --blanco:#FFFFFF;
+  --naranja-ink:#A84E00; --texto:#475467; --suave:#A9B6C8; --linea:#E2E8F0;
+  --display:'Poppins',Arial,sans-serif; --sans:'Inter',Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--gris);color:var(--acero);font-family:var(--sans);font-size:17px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(1200px,100%);margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.01em}
+.brand img{width:44px;height:44px;border-radius:12px}
+.brand .t{color:var(--naranja)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;padding:16px 28px;border-radius:14px;transition:transform .2s}
+.btn.o{background:var(--naranja);color:var(--acero);box-shadow:0 14px 34px rgba(255,122,0,.32)}
+.btn.line{border:1.5px solid rgba(13,27,42,.18);color:var(--acero);background:rgba(255,255,255,.6)}
+.btn.dark{background:var(--acero);color:var(--blanco)}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--naranja-ink)}
+.dark .kicker{color:var(--naranja)}
+h2{font-family:var(--display);font-weight:700;font-size:50px;line-height:1.06;letter-spacing:-.025em;margin:14px 0 18px;text-wrap:balance}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;z-index:2;padding-bottom:0;
+  background:
+    radial-gradient(42% 46% at 82% 18%,rgba(255,122,0,.20),transparent 70%),
+    radial-gradient(36% 40% at 10% 40%,rgba(255,122,0,.10),transparent 70%),
+    var(--gris)}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(13,27,42,.10) 1px,transparent 1.2px);background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 70%);mask-image:linear-gradient(180deg,#000 0%,transparent 70%);pointer-events:none}
+nav{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding-block:24px}
+.links{display:flex;gap:36px;font-size:15px;font-weight:500;color:var(--texto)}
+.links a:first-child{color:var(--acero);font-weight:600}
+nav .btn{padding:12px 22px;font-size:15px}
+.hero-copy{position:relative;z-index:2;text-align:center;padding-top:56px}
+.pill{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:600;background:var(--blanco);border:1px solid var(--linea);padding:7px 16px 7px 8px;border-radius:999px;box-shadow:0 6px 20px rgba(13,27,42,.06)}
+.pill b{background:var(--naranja);color:var(--acero);font-size:12px;padding:3px 9px;border-radius:999px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:84px;line-height:1;letter-spacing:-.035em;margin:26px auto 22px;max-width:17ch}
+.hero h1 span{color:var(--naranja)}
+.hero .lead{font-size:20px;color:var(--texto);max-width:46ch;margin:0 auto 34px}
+.ctas{display:flex;gap:14px;justify-content:center}
+.show{position:relative;z-index:4;width:1120px;margin:70px auto -230px;height:660px;perspective:2200px}
+.screen{position:absolute;left:0;top:0;width:960px;border-radius:20px;background:var(--blanco);padding:10px;box-shadow:0 60px 120px rgba(13,27,42,.30),0 0 0 1px rgba(13,27,42,.06);transform:rotateX(9deg);transform-origin:50% 100%}
+.screen img{border-radius:12px}
+.screen .bar{display:flex;gap:7px;padding:4px 6px 10px}
+.screen .bar i{width:10px;height:10px;border-radius:50%;background:#E2E8F0}
+.phone{position:absolute;right:0;top:120px;width:270px;border-radius:42px;background:var(--acero);padding:10px;box-shadow:0 50px 90px rgba(13,27,42,.40)}
+.phone img{border-radius:33px}
+.chip{position:absolute;display:flex;align-items:center;gap:12px;background:var(--blanco);border-radius:16px;padding:12px 18px 12px 12px;font-size:14px;font-weight:600;box-shadow:0 20px 44px rgba(13,27,42,.18)}
+.chip small{display:block;font-weight:500;color:var(--texto);font-size:12.5px;line-height:1.35}
+.chip .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.chip .ic svg{width:20px;height:20px}
+.c1{left:-70px;top:250px}.c1 .ic{background:#E7F7F0;color:#178A5F}
+.c2{left:640px;top:-34px}.c2 .ic{background:#FFF1E5;color:var(--naranja-ink)}
+
+/* ---------- Tres preguntas ---------- */
+.qs{position:relative;z-index:1;background:var(--acero);color:var(--blanco);padding:310px 0 120px;overflow:hidden}
+.rings{position:absolute;right:-180px;bottom:-260px;width:760px;height:760px;pointer-events:none}
+.rings i{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,122,0,.10)}
+.rings i:nth-child(2){inset:110px}.rings i:nth-child(3){inset:220px;border-color:rgba(255,122,0,.16)}.rings i:nth-child(4){inset:310px;background:rgba(255,122,0,.10);border:none}
+.qs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.qs-head h2{max-width:14ch;margin-bottom:0}
+.qs-head p{max-width:34ch;color:var(--suave);margin:0}
+.qgrid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.q{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:32px}
+.q h3{font-family:var(--display);font-weight:700;font-size:28px;white-space:nowrap;line-height:1.1;color:var(--naranja);margin:0 0 12px}
+.q p{margin:0 0 24px;color:var(--suave);font-size:16px}
+.q .ans{display:flex;align-items:center;gap:12px;background:var(--profundo);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:600}
+.q .ans small{display:block;color:var(--suave);font-weight:500;font-size:12.5px}
+.q .ans .ic{width:36px;height:36px;border-radius:10px;background:rgba(255,122,0,.16);color:var(--naranja);display:grid;place-items:center;flex:none}
+.q .ans .ic svg{width:18px;height:18px}
+.st{margin-left:auto;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(47,180,135,.18);color:#5FD6AC}
+
+/* ---------- Bento ---------- */
+.bento-sec{background:var(--blanco);padding-block:120px}
+.center{text-align:center}
+.center h2{margin-inline:auto;max-width:16ch}
+.center .sub{color:var(--texto);max-width:50ch;margin:0 auto 60px}
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:330px 330px auto;gap:20px}
+.tile{position:relative;border-radius:28px;overflow:hidden;padding:34px}
+.tile h3{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.15;margin:8px 0 8px;max-width:16ch}
+.tile p{margin:0;font-size:16px;max-width:30ch}
+.t1{grid-column:1/8;grid-row:1/3;background:var(--gris)}
+.t1 p{color:var(--texto)}
+.t1 img{position:absolute;left:34px;right:-80px;bottom:-30px;width:calc(100% + 46px);max-width:none;border-radius:16px;box-shadow:0 30px 70px rgba(13,27,42,.18),0 0 0 1px rgba(13,27,42,.06)}
+.t2{grid-column:8/13;grid-row:1/2;background:var(--naranja);color:var(--acero)}
+.t2 .kicker{color:var(--acero)}
+.t2 img{position:absolute;right:30px;top:96px;width:176px;border-radius:30px;border:8px solid var(--acero);box-shadow:0 30px 60px rgba(13,27,42,.30)}
+.t2 h3{max-width:10ch}.t2 p{max-width:17ch}
+.t3{grid-column:8/13;grid-row:2/3;background:var(--profundo);color:var(--blanco)}
+.t3 .kicker{color:var(--naranja)}
+.t3 p{color:var(--suave);max-width:24ch}
+.t3 img{position:absolute;left:34px;bottom:-150px;width:440px;max-width:none;border-radius:14px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.mini{grid-row:3;grid-column:span 4;background:var(--gris);display:flex;gap:18px;align-items:flex-start;padding:28px}
+.mini .ic{width:52px;height:52px;border-radius:16px;background:var(--blanco);display:grid;place-items:center;color:var(--naranja-ink);flex:none;box-shadow:0 8px 20px rgba(13,27,42,.06)}
+.mini .ic svg{width:24px;height:24px}
+.mini h3{font-size:20px;margin:2px 0 4px}
+.mini p{color:var(--texto);font-size:15px}
+
+/* ---------- Pasos ---------- */
+.steps-sec{background:var(--profundo);color:var(--blanco);padding-block:120px;position:relative;overflow:hidden}
+.steps-sec h2{max-width:15ch}
+.steps{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:64px}
+.steps::before{content:"";position:absolute;left:60px;right:60px;top:38px;border-top:2px dashed rgba(255,122,0,.45)}
+.step{position:relative}
+.pin{width:76px;height:76px;display:grid;place-items:center;border-radius:50%;background:var(--acero);border:2px solid rgba(255,122,0,.5);margin-bottom:26px;box-shadow:0 0 0 10px var(--profundo)}
+.pin svg{width:34px;height:34px}
+.step small{font-family:var(--display);font-weight:700;color:var(--naranja);font-size:14px;letter-spacing:.1em}
+.step h3{font-family:var(--display);font-weight:700;font-size:26px;margin:6px 0 10px}
+.step p{margin:0;color:var(--suave);max-width:30ch}
+
+/* ---------- CTA ---------- */
+.cta-sec{background:var(--gris);padding-block:120px}
+.cta{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:40px;align-items:center;background:var(--naranja);border-radius:36px;padding:72px 72px 0;overflow:hidden;box-shadow:0 40px 90px rgba(255,122,0,.28)}
+.cta::before{content:"";position:absolute;left:-120px;top:-160px;width:520px;height:520px;border-radius:50%;border:70px solid rgba(255,255,255,.10)}
+.cta-copy{position:relative;padding-bottom:72px}
+.cta h2{font-size:56px;color:var(--acero);max-width:13ch;margin-top:0}
+.cta p{color:#3D2410;font-size:19px;max-width:36ch;margin:0 0 32px}
+.cta .ctas{justify-content:flex-start}
+.cta .btn.line{background:rgba(255,255,255,.22);border-color:rgba(13,27,42,.25)}
+.cta .ph{position:relative;align-self:end;width:300px;margin-left:auto;border-radius:44px 44px 0 0;background:var(--acero);padding:11px 11px 0;box-shadow:0 -10px 60px rgba(13,27,42,.30)}
+.cta .ph img{border-radius:34px 34px 0 0;height:520px;object-fit:cover;object-position:top}
+
+footer{background:var(--acero);color:var(--suave);font-size:14px;padding-block:44px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px}
+footer .brand{color:var(--blanco);font-size:20px}
+footer .brand img{width:36px;height:36px;border-radius:10px}
+footer nav{padding:0;gap:28px;display:flex}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2.5c-4.1 0-7.5 3.3-7.5 7.4 0 5.6 7.5 11.6 7.5 11.6s7.5-6 7.5-11.6c0-4.1-3.4-7.4-7.5-7.4z" fill="currentColor"/><circle cx="12" cy="10" r="3" fill="#0D1B2A"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3.5 17.2a1.8 1.8 0 0 0 2.5 2.5l5.8-5.8a4 4 0 0 0 5.1-5.4l-2.5 2.5-2.2-.4-.4-2.2z" fill="currentColor"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5l9 16H3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 10v4M12 17v.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 12h5M10 16h5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#"><img src="img/logo-mark.png" alt=""><span><span class="t">Tool</span>Track</span></a>
+      <div class="links"><a href="#">Inicio</a><a href="#">Funciones</a><a href="#">Cómo funciona</a><a href="#">App del operario</a><a href="#">Contacto</a></div>
+      <a class="btn o" href="#">Pedí una demo</a>
+    </nav>
+    <div class="hero-copy">
+      <span class="pill"><b>Nuevo</b>Control de herramientas para constructoras</span>
+      <h1>Cada herramienta,<br><span>en su lugar.</span></h1>
+      <p class="lead">Sabé dónde está, quién la tiene y en qué estado. Desde el depósito hasta el cierre de la obra.</p>
+      <div class="ctas"><a class="btn o" href="#">Pedí una demo →</a><a class="btn line" href="#">Ver cómo funciona</a></div>
+    </div>
+  </div>
+  <div class="show">
+    <div class="screen"><div class="bar"><i></i><i></i><i></i></div><img src="img/admin.jpg" alt="Panel de inicio del administrador de TOOLTRACK con obras activas, herramientas disponibles y últimos movimientos"></div>
+    <div class="phone"><img src="img/home.jpg" alt="Inicio de la app del operario con accesos para solicitar herramienta y reportar rotura"></div>
+    <div class="chip c1"><div class="ic"><svg><use href="#i-check"/></svg></div><div>Solicitud aprobada<small>Amoladora angular 115 mm<br>ahora la tiene Martín Sosa</small></div></div>
+    <div class="chip c2"><div class="ic"><svg><use href="#i-pin"/></svg></div><div>Edificio Mitre 1450<small>4 herramientas en obra</small></div></div>
+  </div>
+</header>
+
+<section class="qs dark">
+  <div class="rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <div class="qs-head">
+      <div><span class="kicker">Lo que siempre querés saber</span><h2>Tres preguntas, una sola respuesta.</h2></div>
+      <p>TOOLTRACK registra cada movimiento, así la respuesta está siempre a mano.</p>
+    </div>
+    <div class="qgrid">
+      <div class="q"><h3>¿Dónde está?</h3><p>En el depósito o en qué obra, siempre ubicada.</p><div class="ans"><div class="ic"><svg><use href="#i-pin"/></svg></div><div>Edificio Mitre 1450<small>Rotomartillo SDS Plus</small></div></div></div>
+      <div class="q"><h3>¿Quién la tiene?</h3><p>El custodio, con fecha y quién lo aprobó.</p><div class="ans"><div class="ic"><svg><use href="#i-user"/></svg></div><div>Martín Sosa<small>Desde el 31 oct 2026</small></div></div></div>
+      <div class="q"><h3>¿En qué estado está?</h3><p>Disponible, asignada o en reparación.</p><div class="ans"><div class="ic"><svg><use href="#i-wrench"/></svg></div><div>Nivel láser de línea<small>Bosch</small></div><span class="st">Asignada</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="bento-sec"><div class="wrap">
+  <div class="center"><span class="kicker">Funciones</span><h2>Todo el pañol en una sola plataforma</h2><p class="sub">Un panel para la oficina y una app para la obra, conectados en tiempo real.</p></div>
+  <div class="bento">
+    <div class="tile t1"><span class="kicker">Panel del administrador</span><h3>Inventario completo y siempre al día</h3><p>Estado, custodio, obra y ubicación de cada herramienta.</p><img src="img/herr.jpg" alt="Listado de herramientas con marca, categoría, estado, custodio y ubicación"></div>
+    <div class="tile t2"><span class="kicker">App del operario</span><h3>Pedí desde la obra</h3><p>Elegís la herramienta y el responsable recibe la solicitud.</p><img src="img/solicitar.jpg" alt="Pantalla para solicitar una herramienta disponible"></div>
+    <div class="tile t3"><span class="kicker">Cierre de obra</span><h3>Cerrá sin faltantes</h3><p>Verificá cada herramienta antes de terminar.</p><img src="img/cierre.jpg" alt="Cierre de obra del Edificio Mitre 1450 con el resumen de verificación"></div>
+    <div class="tile mini"><div class="ic"><svg><use href="#i-clock"/></svg></div><div><h3>Historial completo</h3><p>Cada alta, préstamo y devolución queda registrada.</p></div></div>
+    <div class="tile mini"><div class="ic"><svg><use href="#i-alert"/></svg></div><div><h3>Roturas y reparaciones</h3><p>El operario reporta y vos seguís el arreglo.</p></div></div>
+    <div class="tile mini"><div class="ic"><svg><use href="#i-doc"/></svg></div><div><h3>Reportes en PDF y Excel</h3><p>Listos para compartir con tu equipo.</p></div></div>
+  </div>
+</div></section>
+
+<section class="steps-sec dark"><div class="wrap">
+  <span class="kicker">Cómo funciona</span>
+  <h2>Del depósito a la obra, en tres pasos.</h2>
+  <div class="steps">
+    <div class="step"><div class="pin"><svg style="color:#FF7A00"><use href="#i-box"/></svg></div><small>PASO 1</small><h3>Cargás tu inventario</h3><p>Herramientas, kits y obras, cada una con su estado.</p></div>
+    <div class="step"><div class="pin"><svg style="color:#FF7A00"><use href="#i-phone"/></svg></div><small>PASO 2</small><h3>El operario pide</h3><p>Desde el celular, y el sistema avisa al responsable.</p></div>
+    <div class="step"><div class="pin"><svg style="color:#FF7A00"><use href="#i-check"/></svg></div><small>PASO 3</small><h3>Aprobás y listo</h3><p>La custodia cambia sola y queda en el historial.</p></div>
+  </div>
+</div></section>
+
+<section class="cta-sec"><div class="wrap">
+  <div class="cta">
+    <div class="cta-copy">
+      <h2>Dejá de buscar herramientas.</h2>
+      <p>Te mostramos TOOLTRACK con datos de ejemplo y lo probás en tu celular.</p>
+      <div class="ctas"><a class="btn dark" href="#">Pedí una demo →</a><a class="btn line" href="#">Escribinos</a></div>
+    </div>
+    <div class="ph"><img src="img/mis.jpg" alt="Mis herramientas en la app del operario"></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span class="brand"><img src="img/logo-mark.png" alt=""><span><span class="t">Tool</span>Track</span></span>
+  <nav><a href="#">Funciones</a><a href="#">Cómo funciona</a><a href="#">Contacto</a></nav>
+  <span>Cada herramienta, en su lugar. © 2026</span>
+</div></footer>
+</body>
+</html>
