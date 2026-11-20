@@ -150,7 +150,7 @@ export function Hero() {
           </p>
 
           <div data-fade className="flex flex-col justify-center gap-3.5 sm:flex-row">
-            <Button href="#">Pedí una demo →</Button>
+            <Button href="#contacto">Pedí una demo →</Button>
             <Button href="#como-funciona" variant="linea">
               <Icon name="play" className="size-4 text-naranja-ink" />
               Ver el video

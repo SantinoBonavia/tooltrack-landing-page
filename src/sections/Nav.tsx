@@ -34,7 +34,7 @@ export function Nav() {
       </ul>
 
       <div className="flex items-center gap-2">
-        <Button href="#" className="!px-[22px] !py-3 text-[15px] max-sm:hidden">
+        <Button href="#contacto" className="!px-[22px] !py-3 text-[15px] max-sm:hidden">
           Pedí una demo
         </Button>
         <button
@@ -67,7 +67,7 @@ export function Nav() {
               </li>
             ))}
           </ul>
-          <Button href="#" className="mt-2 w-full sm:hidden">
+          <Button href="#contacto" onClick={() => setOpen(false)} className="mt-2 w-full sm:hidden">
             Pedí una demo
           </Button>
         </div>

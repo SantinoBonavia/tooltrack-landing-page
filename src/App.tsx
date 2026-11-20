@@ -4,6 +4,7 @@ import { Questions } from './sections/Questions'
 import { VideoSection } from './sections/VideoSection'
 import { AdminApp } from './sections/AdminApp'
 import { OperarioApp } from './sections/OperarioApp'
+import { Contact } from './sections/Contact'
 
 // Cada sección vive en su archivo de src/sections/, en el orden de docs/PLAN.md.
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <VideoSection />
         <AdminApp />
         <OperarioApp />
+        <Contact />
       </main>
     </div>
   )
