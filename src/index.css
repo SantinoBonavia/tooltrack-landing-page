@@ -1,19 +1,50 @@
 @import "tailwindcss";
 
-/* Identidad TOOLTRACK: naranja, azules profundos y Poppins */
+/* Identidad TOOLTRACK (paleta de Branding, sin colores extra) */
 @theme {
-  --color-brand: #ff7a00;
-  --color-navy: #1b263b;
-  --color-ink: #0d1b2a;
-  --color-mist: #f1f5f9;
-  --color-mute: #a3b3c9;
+  --color-acero: #0d1b2a; /* Azul Acero: fondos oscuros y texto principal */
+  --color-profundo: #1b263b; /* Azul Profundo: superficies oscuras */
+  --color-naranja: #ff7a00; /* Naranja de marca */
+  --color-naranja-ink: #a84e00; /* Naranja para texto sobre fondo claro (contraste AA) */
+  --color-gris: #f1f5f9; /* Gris Claro */
+  --color-blanco: #ffffff;
+
+  /* Neutros de apoyo derivados de la maqueta */
+  --color-texto: #475467; /* texto secundario sobre claro */
+  --color-suave: #a9b6c8; /* texto secundario sobre oscuro */
+  --color-linea: #e2e8f0; /* bordes finos */
+
   --font-display: "Poppins", Arial, sans-serif;
   --font-sans: "Inter", Arial, sans-serif;
 }
 
+:root {
+  color-scheme: light;
+  /*
+   * La composición del hero (panel + celular + notificaciones) está diseñada a 1120 px.
+   * --u equivale a 1 px de ese diseño y se achica con la pantalla, así todo escala junto.
+   */
+  --show-w: min(1120px, calc(100vw - 32px));
+  --u: calc(var(--show-w) / 1120);
+  /* Igual que --u pero con piso: el celular y las notificaciones no quedan diminutos */
+  --pu: max(var(--u), 0.45px);
+  --cu: max(var(--u), 0.78px);
+  /* Cuánto se mete la composición del hero dentro de la banda oscura */
+  --show-overlap: calc(230 * var(--u));
+  /* Lo que el celular sobresale por debajo del panel en pantallas chicas */
+  --phone-extra: max(0px, calc(557 * var(--pu) - 540 * var(--u)));
+}
+
 html {
-  background: var(--color-ink);
-  color: var(--color-mist);
+  background: var(--color-gris);
+  color: var(--color-acero);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Lenis */

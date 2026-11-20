@@ -1,13 +1,19 @@
 import { useSmoothScroll } from './lib/useSmoothScroll'
 import { Hero } from './sections/Hero'
+import { Questions } from './sections/Questions'
+import { Features } from './sections/Features'
 
-// Base de la landing. Cada sección vive en src/sections/ y la arma una persona del equipo.
+// Cada sección vive en su archivo de src/sections/, en el orden de docs/PLAN.md.
 export default function App() {
   useSmoothScroll()
 
   return (
-    <main>
+    <div className="overflow-x-clip">
       <Hero />
-    </main>
+      <main>
+        <Questions />
+        <Features />
+      </main>
+    </div>
   )
 }
