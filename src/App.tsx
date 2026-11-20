@@ -1,7 +1,7 @@
 import { useSmoothScroll } from './lib/useSmoothScroll'
 import { Hero } from './sections/Hero'
 import { Questions } from './sections/Questions'
-import { Features } from './sections/Features'
+import { VideoSection } from './sections/VideoSection'
 import { AdminApp } from './sections/AdminApp'
 import { OperarioApp } from './sections/OperarioApp'
 
@@ -14,7 +14,7 @@ export default function App() {
       <Hero />
       <main>
         <Questions />
-        <Features />
+        <VideoSection />
         <AdminApp />
         <OperarioApp />
       </main>

@@ -5,7 +5,7 @@ import { Icon } from '../components/Icon'
 
 const links = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#funciones', label: 'Funciones' },
+  { href: '#como-funciona', label: 'Cómo funciona' },
   { href: '#app-administrador', label: 'App del administrador' },
   { href: '#app-operario', label: 'App del operario' },
   { href: '#contacto', label: 'Contacto' },
