@@ -145,13 +145,14 @@ export function Hero() {
           </h1>
 
           <p data-fade className="mx-auto mb-8 max-w-[46ch] text-lg text-texto sm:text-xl">
-            Sabé dónde está, quién la tiene y en qué estado. Desde el depósito hasta el cierre de la obra.
+            Controlá el pañol desde la oficina y dejá que el operario pida desde la obra. Cada préstamo,
+            devolución y rotura queda registrado.
           </p>
 
           <div data-fade className="flex flex-col justify-center gap-3.5 sm:flex-row">
             <Button href="#">Pedí una demo →</Button>
-            <Button href="#como-funciona" variant="linea">
-              Ver cómo funciona
+            <Button href="#funciones" variant="linea">
+              Ver funciones
             </Button>
           </div>
         </div>

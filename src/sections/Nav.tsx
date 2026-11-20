@@ -6,7 +6,7 @@ import { Icon } from '../components/Icon'
 const links = [
   { href: '#inicio', label: 'Inicio' },
   { href: '#funciones', label: 'Funciones' },
-  { href: '#como-funciona', label: 'Cómo funciona' },
+  { href: '#app-administrador', label: 'App del administrador' },
   { href: '#app-operario', label: 'App del operario' },
   { href: '#contacto', label: 'Contacto' },
 ]
@@ -20,7 +20,7 @@ export function Nav() {
         <Brand />
       </a>
 
-      <ul className="hidden gap-9 text-[15px] font-medium text-texto lg:flex">
+      <ul className="hidden gap-7 text-[15px] font-medium text-texto lg:flex xl:gap-9">
         {links.map((l, i) => (
           <li key={l.href}>
             <a

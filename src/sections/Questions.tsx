@@ -61,11 +61,12 @@ export function Questions() {
             <article
               key={item.q}
               data-reveal
-              className="rounded-3xl border border-blanco/8 bg-blanco/4 p-7 backdrop-blur-[2px] lg:p-8"
+              className="flex flex-col rounded-3xl border border-blanco/8 bg-blanco/4 p-7 backdrop-blur-[2px] lg:p-8"
             >
               <h3 className="mb-3 font-display text-[clamp(24px,2.3vw,28px)] leading-[1.1] font-bold text-naranja">{item.q}</h3>
               <p className="mb-6 text-base text-suave">{item.text}</p>
-              <div className="flex items-center gap-3 rounded-[14px] bg-profundo px-3.5 py-3 text-sm font-semibold">
+              {/* mt-auto: las tres respuestas quedan alineadas abajo aunque el texto tenga distinto largo */}
+              <div className="mt-auto flex items-center gap-3 rounded-[14px] bg-profundo px-3.5 py-3 text-sm font-semibold">
                 <span className="grid size-9 flex-none place-items-center rounded-[10px] bg-naranja/16 text-naranja">
                   <Icon name={item.icon} className="size-[18px]" />
                 </span>
